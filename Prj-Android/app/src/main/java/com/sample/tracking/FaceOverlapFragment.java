@@ -55,8 +55,7 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
         frameIndex = 0;
         mPaint = new Paint();
         mPaint.setColor(Color.rgb(57, 138, 243));
-        int strokeWidth = Math.max(PREVIEW_HEIGHT / 240, 2);
-        mPaint.setStrokeWidth(strokeWidth);
+        mPaint.setStrokeWidth(2);
         mPaint.setStyle(Style.FILL);
         mHandlerThread = new HandlerThread("DrawFacePointsThread");
         mHandlerThread.start();
@@ -104,7 +103,7 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
         frameIndex += 1;
 
         List<Face> faceActions = mMultiTrack106.getTrackingInfo();
-        
+
         if (faceActions != null) {
 
             if (!mOverlap.getHolder().getSurface().isValid()) {
@@ -117,29 +116,29 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
 
             canvas.drawColor(0, PorterDuff.Mode.CLEAR);
             canvas.setMatrix(getMatrix());
-//            boolean rotate270 = mCameraInfo.orientation == 270;
+            boolean rotate270 = mCameraInfo.orientation == 270;
             for (Face r : faceActions) {
 
                 Rect rect = new Rect(PREVIEW_HEIGHT - r.left, r.top, PREVIEW_HEIGHT - r.right, r.bottom);
 
-//                PointF[] points = new PointF[106];
-//                for (int i = 0; i < 106; i++) {
-//                    points[i] = new PointF(r.landmarks[i * 2], r.landmarks[i * 2 + 1]);
-//                }
+                PointF[] points = new PointF[106];
+                for (int i = 0; i < 106; i++) {
+                    points[i] = new PointF(r.landmarks[i * 2], r.landmarks[i * 2 + 1]);
+                }
 
-//                float[] visibles = new float[106];
+                float[] visible = new float[106];
 
-//                for (int i = 0; i < points.length; i++) {
-//                    visibles[i] = 1.0f;
-//                    if (rotate270) {
-//                        points[i].x = PREVIEW_HEIGHT - points[i].x;
-//                    }
-//                }
+                for (int i = 0; i < points.length; i++) {
+                    visible[i] = 1.0f;
+                    if (rotate270) {
+                        points[i].x = PREVIEW_HEIGHT - points[i].x;
+                    }
+                }
 
                 STUtils.drawFaceRect(canvas, rect, PREVIEW_HEIGHT,
                         PREVIEW_WIDTH, frontCamera);
-//                STUtils.drawPoints(canvas, mPaint, points, visibles, PREVIEW_HEIGHT,
-//                        PREVIEW_WIDTH, frontCamera);
+                STUtils.drawPoints(canvas, mPaint, points, visible, PREVIEW_HEIGHT,
+                        PREVIEW_WIDTH, frontCamera);
 
             }
             mOverlap.getHolder().unlockCanvasAndPost(canvas);
@@ -156,9 +155,8 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
         super.onResume();
 
         this.mIsPaused = false;
-
         if (null == mMultiTrack106) {
-            mMultiTrack106 = new FaceTracking("/sdcard/ZeuseesFaceTracking/models");
+            mMultiTrack106 = new FaceTracking("/sdcard/FaceTracking/models");
         }
     }
 
@@ -169,7 +167,6 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
         synchronized (lockObj) {
             if (mMultiTrack106 != null) {
                 mMultiTrack106 = null;
-
             }
         }
 

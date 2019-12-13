@@ -112,8 +112,8 @@ public class STUtils {
         if(canvas != null) {
             Paint paint = new Paint();
             paint.setColor(Color.rgb(255, 0, 127));
-            int strokeWidth = Math.max(width / 240, 2);
-            paint.setStrokeWidth((float)strokeWidth);
+            float strokeWidth = Math.max(width / 240, 2.0f);
+            paint.setStrokeWidth(strokeWidth);
             if(frontCamera) {
                 int left = rect.left;
                 rect.left = width - rect.right;
@@ -125,9 +125,9 @@ public class STUtils {
         }
     }
 
-    public static void drawPoints(Canvas canvas, Paint paint, PointF[] points, float[] visibles, int width, int height, boolean frontCamera) {
+    public static void drawPoints(Canvas canvas, Paint paint, PointF[] points, float[] visible, int width, int height, boolean frontCamera) {
         if(canvas != null) {
-            int strokeWidth = Math.max(width / 240, 2);
+            float strokeWidth = Math.max(width / 240, 2.0f);
 
             for(int i = 0; i < points.length; ++i) {
                 PointF p = points[i];
@@ -135,7 +135,7 @@ public class STUtils {
                     p.x = (float)width - p.x;
                 }
 
-                if((double)visibles[i] < 0.5D) {
+                if(visible[i] < 0.5f) {
                     paint.setColor(Color.rgb(255, 20, 20));
                 } else {
                     paint.setColor(Color.rgb(57, 168, 243));

@@ -177,7 +177,7 @@ public class CameraOverlapFragment extends Fragment {
                 	if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
     					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
     				} else{
-    					parameters.setFocusMode(parameters.FOCUS_MODE_AUTO);
+    					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
     				}
                 }
                 
