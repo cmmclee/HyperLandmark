@@ -1,47 +1,38 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:background="@android:color/white"
+    android:orientation="vertical">
 
-    tools:context="com.sample.tracking.FaceTrackerActivity"
-	>
+    <com.hyq.hm.hyperlandmark.FixedAspectRatioRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-	<com.sample.tracking.FixedAspectRatioFrameLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:id="@+id/framelayout"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentLeft="true"
-		android:layout_alignParentStart="true">
+        <SurfaceView
+            android:id="@+id/surface_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.hyq.hm.hyperlandmark.FixedAspectRatioRelativeLayout>
 
-		<fragment
-			android:id="@+id/overlapFragment"
-			class="com.sample.tracking.FaceOverlapFragment"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"></fragment>
+<!--    <SeekBar-->
+<!--        android:id="@+id/seek_bar_a"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:max="300"-->
+<!--        android:progress="100" />-->
 
-	</com.sample.tracking.FixedAspectRatioFrameLayout>
+<!--    <SeekBar-->
+<!--        android:id="@+id/seek_bar_b"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:max="360" />-->
 
-    <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       android:layout_below="@+id/framelayout">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/fpstext"
-			android:textSize="36dp"
-            android:layout_weight="1"
-            android:text="Tracking Time"
-            />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/actionText"
-            android:layout_weight="1"
-            android:text="FaceAction" />
-    </LinearLayout>
-	
-</RelativeLayout>
+<!--    <SeekBar-->
+<!--        android:id="@+id/seek_bar_c"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:max="200"-->
+<!--        android:progress="100" />-->
+</LinearLayout>

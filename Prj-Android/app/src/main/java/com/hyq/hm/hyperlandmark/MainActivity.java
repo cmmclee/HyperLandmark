@@ -82,12 +82,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tracker);
+        setContentView(R.layout.activity_main);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ArrayList<String> list = new ArrayList<>();
-            for (int i = 0; i < permissions.length; i++) {
-                if (PermissionChecker.checkSelfPermission(this, permissions[i]) == PackageManager.PERMISSION_DENIED) {
-                    list.add(permissions[i]);
+            for (String permission : permissions) {
+                if (PermissionChecker.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED) {
+                    list.add(permission);
                 }
             }
             if (list.size() != 0) {
