@@ -1,6 +1,5 @@
 package com.sample.tracking;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,14 +14,12 @@ import android.view.WindowManager;
 import android.widget.Toast;
 import android.support.v4.app.ActivityCompat;
 
-import com.hyq.hm.hyperlandmark.R;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class FaceTrackerActivity extends Activity {
+public class MainActivity extends Activity {
     private final static int CAMERA_REQUEST_CODE = 0x111;
 
     public void copyFilesFromAssets(Context context, String oldPath, String newPath) {
@@ -76,7 +73,7 @@ public class FaceTrackerActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_multitracker);
+        setContentView(R.layout.activity_main);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 

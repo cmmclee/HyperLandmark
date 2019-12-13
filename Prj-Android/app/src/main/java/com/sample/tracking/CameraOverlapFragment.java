@@ -17,7 +17,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hyq.hm.hyperlandmark.R;
 
 
 public class CameraOverlapFragment extends Fragment {
