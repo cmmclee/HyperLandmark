@@ -43,8 +43,8 @@ public class CameraOverlapFragment extends Fragment {
                 false);
 
 
-        mSurfaceview = (SurfaceView) view.findViewById(R.id.surfaceViewCamera);
-        mOverlap = (SurfaceView) view.findViewById(R.id.surfaceViewOverlap);
+        mSurfaceview = view.findViewById(R.id.surfaceViewCamera);
+        mOverlap = view.findViewById(R.id.surfaceViewOverlap);
         mOverlap.setZOrderOnTop(true);
         mOverlap.getHolder().setFormat(PixelFormat.TRANSLUCENT);
         mSurfaceHolder = mSurfaceview.getHolder();

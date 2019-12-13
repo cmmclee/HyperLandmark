@@ -1,5 +1,6 @@
 package com.sample.tracking;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -81,9 +82,9 @@ public class FaceTrackerActivity extends Activity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ArrayList<String> list = new ArrayList<>();
-            for (int i = 0; i < permissions.length; i++) {
-                if (PermissionChecker.checkSelfPermission(this, permissions[i]) == PackageManager.PERMISSION_DENIED) {
-                    list.add(permissions[i]);
+            for (String permission : permissions) {
+                if (PermissionChecker.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED) {
+                    list.add(permission);
                 }
             }
             if (list.size() != 0) {
@@ -135,13 +136,8 @@ public class FaceTrackerActivity extends Activity {
 
         final FaceOverlapFragment fragment = (FaceOverlapFragment) getFragmentManager()
                 .findFragmentById(R.id.overlapFragment);
-        fragment.registTrackCallback(new FaceOverlapFragment.TrackCallBack() {
+        fragment.registerTrackCallback(new FaceOverlapFragment.TrackCallBack() {
 
-            @Override
-            public void onTrackdetected(final int value, final float pitch, final float roll, final float yaw, final float eye_dist,
-                                        final int id, final int eyeBlink, final int mouthAh, final int headYaw, final int headPitch, final int browJump) {
-
-            }
         });
     }
 

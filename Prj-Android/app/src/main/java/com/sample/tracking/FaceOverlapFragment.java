@@ -19,12 +19,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import zeusees.tracking.Face;
 import zeusees.tracking.FaceTracking;
@@ -45,7 +42,7 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
     private int frameIndex = 0;
 
     private Paint mPaint;
-    private Object lockObj = new Object();
+    private final Object lockObj = new Object();
     private boolean mIsPaused = false;
 
     @SuppressLint("NewApi")
@@ -161,22 +158,8 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
 
         this.mIsPaused = false;
 
-        if (mMultiTrack106 == null) {
-
-            AuthCallback authCallback = new AuthCallback() {
-                @Override
-                public void onAuthResult(boolean succeed, String errMessage) {
-                    if (!TextUtils.isEmpty(errMessage)) {
-                        Toast.makeText(getActivity(), errMessage, Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            };
-
-            if (authCallback != null) {
-                mMultiTrack106 = new FaceTracking("/sdcard/ZeuseesFaceTracking/models");
-            }
-
+        if (null == mMultiTrack106) {
+            mMultiTrack106 = new FaceTracking("/sdcard/ZeuseesFaceTracking/models");
         }
     }
 
@@ -194,13 +177,11 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
         super.onPause();
     }
 
-    public void registTrackCallback(TrackCallBack callback) {
+    public void registerTrackCallback(TrackCallBack callback) {
         mListener = callback;
     }
 
     public interface TrackCallBack {
-        void onTrackdetected(int value, float pitch, float roll, float yaw, float eye_dist,
-                             int id, int eyeBlink, int mouthAh, int headYaw, int headPitch, int browJump);
     }
 
 }
