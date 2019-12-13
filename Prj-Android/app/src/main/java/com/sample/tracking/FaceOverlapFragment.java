@@ -2,7 +2,6 @@ package com.sample.tracking;
 
 import java.util.List;
 
-import com.zeusee.zmobileapi.AuthCallback;
 import com.zeusee.zmobileapi.STUtils;
 
 import android.annotation.SuppressLint;
@@ -118,29 +117,29 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
 
             canvas.drawColor(0, PorterDuff.Mode.CLEAR);
             canvas.setMatrix(getMatrix());
-            boolean rotate270 = mCameraInfo.orientation == 270;
+//            boolean rotate270 = mCameraInfo.orientation == 270;
             for (Face r : faceActions) {
 
                 Rect rect = new Rect(PREVIEW_HEIGHT - r.left, r.top, PREVIEW_HEIGHT - r.right, r.bottom);
 
-                PointF[] points = new PointF[106];
-                for (int i = 0; i < 106; i++) {
-                    points[i] = new PointF(r.landmarks[i * 2], r.landmarks[i * 2 + 1]);
-                }
+//                PointF[] points = new PointF[106];
+//                for (int i = 0; i < 106; i++) {
+//                    points[i] = new PointF(r.landmarks[i * 2], r.landmarks[i * 2 + 1]);
+//                }
 
-                float[] visibles = new float[106];
+//                float[] visibles = new float[106];
 
-                for (int i = 0; i < points.length; i++) {
-                    visibles[i] = 1.0f;
-                    if (rotate270) {
-                        points[i].x = PREVIEW_HEIGHT - points[i].x;
-                    }
-                }
+//                for (int i = 0; i < points.length; i++) {
+//                    visibles[i] = 1.0f;
+//                    if (rotate270) {
+//                        points[i].x = PREVIEW_HEIGHT - points[i].x;
+//                    }
+//                }
 
                 STUtils.drawFaceRect(canvas, rect, PREVIEW_HEIGHT,
                         PREVIEW_WIDTH, frontCamera);
-                STUtils.drawPoints(canvas, mPaint, points, visibles, PREVIEW_HEIGHT,
-                        PREVIEW_WIDTH, frontCamera);
+//                STUtils.drawPoints(canvas, mPaint, points, visibles, PREVIEW_HEIGHT,
+//                        PREVIEW_WIDTH, frontCamera);
 
             }
             mOverlap.getHolder().unlockCanvasAndPost(canvas);

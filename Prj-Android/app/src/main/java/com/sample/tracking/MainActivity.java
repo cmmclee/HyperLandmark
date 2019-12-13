@@ -20,18 +20,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
-    private final static int CAMERA_REQUEST_CODE = 0x111;
 
     public void copyFilesFromAssets(Context context, String oldPath, String newPath) {
         try {
 
             String[] fileNames = context.getAssets().list(oldPath);
             if (fileNames != null && fileNames.length > 0) {
-                // directory
                 File file = new File(newPath);
                 if (!file.mkdir()) {
                     Log.d("mkdir", "can't make folder");
-
                 }
 
                 for (String fileName : fileNames) {
@@ -39,7 +36,6 @@ public class MainActivity extends Activity {
                             newPath + "/" + fileName);
                 }
             } else {
-                // file
                 InputStream is = context.getAssets().open(oldPath);
                 FileOutputStream fos = new FileOutputStream(new File(newPath));
                 byte[] buffer = new byte[1024];
@@ -52,13 +48,11 @@ public class MainActivity extends Activity {
                 fos.close();
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     void InitModelFiles() {
-
         String assetPath = "ZeuseesFaceTracking";
         String sdcardPath = Environment.getExternalStorageDirectory()
                 + File.separator + assetPath;

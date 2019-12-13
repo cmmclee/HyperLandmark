@@ -57,10 +57,10 @@ public class FaceTracking {
         Log.d("numFace_tracking", numFace + "");
 
         for (int i = 0; i < numFace; i++) {
-            int[] landmarks = getTrackingLandmarkByIndex(i, session);
+//            int[] landmarks = getTrackingLandmarkByIndex(i, session);
             int[] faceRect = getTrackingLocationByIndex(i, session);
             int id = getTrackingIDByIndex(i, session);
-            Face face = new Face(faceRect[0], faceRect[1], faceRect[2], faceRect[3], landmarks, id);
+            Face face = new Face(faceRect[0], faceRect[1], faceRect[2], faceRect[3], null, id);
             faces.add(face);
         }
     }
