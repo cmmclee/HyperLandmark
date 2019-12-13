@@ -26,10 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * Created by 海米 on 2018/11/28.
- */
-
 public class STUtils {
     private static final String TIMING_LOG_TAG = "STUtils timing";
     private static RenderScript mRS = null;

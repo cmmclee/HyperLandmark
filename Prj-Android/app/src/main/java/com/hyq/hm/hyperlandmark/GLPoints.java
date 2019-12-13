@@ -1,16 +1,11 @@
 package com.hyq.hm.hyperlandmark;
 
-import android.graphics.Rect;
-import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-/**
- * Created by 海米 on 2018/11/29.
- */
 
 public class GLPoints {
     private FloatBuffer vertexBuffer;

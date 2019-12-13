@@ -56,7 +56,7 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
 
         mNv21Data = new byte[PREVIEW_WIDTH * PREVIEW_HEIGHT * 2];
         mTmpBuffer = new byte[PREVIEW_WIDTH * PREVIEW_HEIGHT * 2];
-        frameIndex= 0 ;
+        frameIndex = 0;
         mPaint = new Paint();
         mPaint.setColor(Color.rgb(57, 138, 243));
         int strokeWidth = Math.max(PREVIEW_HEIGHT / 240, 2);
@@ -68,9 +68,8 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == MESSAGE_DRAW_POINTS) {
-                    synchronized (lockObj)
-                    {
-                        if(!mIsPaused) {
+                    synchronized (lockObj) {
+                        if (!mIsPaused) {
                             handleDrawPoints();
                         }
                     }
@@ -101,22 +100,15 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
         boolean frontCamera = (CameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT);
 
 
-
-
-        if(frameIndex == 0 )
-        {
-            mMultiTrack106.FaceTrackingInit(mTmpBuffer,  PREVIEW_HEIGHT,PREVIEW_WIDTH);
-
+        if (frameIndex == 0) {
+            mMultiTrack106.FaceTrackingInit(mTmpBuffer, PREVIEW_HEIGHT, PREVIEW_WIDTH);
+        } else {
+            mMultiTrack106.Update(mTmpBuffer, PREVIEW_HEIGHT, PREVIEW_WIDTH);
         }
-        else {
-            mMultiTrack106.Update(mTmpBuffer, PREVIEW_HEIGHT,PREVIEW_WIDTH);
-        }
-        frameIndex+=1;
+        frameIndex += 1;
 
         List<Face> faceActions = mMultiTrack106.getTrackingInfo();
-
-
-
+        
         if (faceActions != null) {
 
             if (!mOverlap.getHolder().getSurface().isValid()) {
@@ -132,33 +124,32 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
             boolean rotate270 = mCameraInfo.orientation == 270;
             for (Face r : faceActions) {
 
-                Rect rect=new Rect(PREVIEW_HEIGHT - r.left,r.top,PREVIEW_HEIGHT - r.right,r.bottom);
+                Rect rect = new Rect(PREVIEW_HEIGHT - r.left, r.top, PREVIEW_HEIGHT - r.right, r.bottom);
 
                 PointF[] points = new PointF[106];
-                for(int i = 0 ; i < 106 ; i++)
-                {
-                    points[i]  = new PointF(r.landmarks[i*2],r.landmarks[i*2+1]);
+                for (int i = 0; i < 106; i++) {
+                    points[i] = new PointF(r.landmarks[i * 2], r.landmarks[i * 2 + 1]);
                 }
 
-                float[] visibles =  new float[106];
-
+                float[] visibles = new float[106];
 
                 for (int i = 0; i < points.length; i++) {
                     visibles[i] = 1.0f;
                     if (rotate270) {
-                        points[i].x = PREVIEW_HEIGHT-points[i].x;
+                        points[i].x = PREVIEW_HEIGHT - points[i].x;
                     }
                 }
 
-                STUtils.drawFaceRect(canvas,rect, PREVIEW_HEIGHT,
+                STUtils.drawFaceRect(canvas, rect, PREVIEW_HEIGHT,
                         PREVIEW_WIDTH, frontCamera);
-                STUtils.drawPoints(canvas, mPaint, points,visibles, PREVIEW_HEIGHT,
+                STUtils.drawPoints(canvas, mPaint, points, visibles, PREVIEW_HEIGHT,
                         PREVIEW_WIDTH, frontCamera);
 
             }
             mOverlap.getHolder().unlockCanvasAndPost(canvas);
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -193,10 +184,9 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
     public void onPause() {
         mHandler.removeMessages(MESSAGE_DRAW_POINTS);
         mIsPaused = true;
-        synchronized (lockObj)
-        {
+        synchronized (lockObj) {
             if (mMultiTrack106 != null) {
-                mMultiTrack106= null;
+                mMultiTrack106 = null;
 
             }
         }

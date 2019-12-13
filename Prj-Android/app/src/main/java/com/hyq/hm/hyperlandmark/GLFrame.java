@@ -9,9 +9,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-/**
- * Created by 海米 on 2017/8/16.
- */
 
 public class GLFrame {
 
@@ -145,7 +142,7 @@ public class GLFrame {
     public void setH(float h) {
         this.h = h;
     }
-    private float l = 1.0f;
+    private float l = 0.0f;
     public void setL(float l) {
         this.l = l;
     }

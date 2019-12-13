@@ -2,17 +2,6 @@ package zeusees.tracking;
 
 
 public class Face {
-    Face(int x1,int y1,int x2,int y2)
-    {
-        left= x1;
-        top = y1;
-        right = x2;
-        bottom = y2;
-        height = y2-y1;
-        width  = x2-x1;
-        landmarks = new int[106*2];
-    }
-
 
     Face(int x1,int y1,int _width,int _height,int[] landmark,int id)
     {
