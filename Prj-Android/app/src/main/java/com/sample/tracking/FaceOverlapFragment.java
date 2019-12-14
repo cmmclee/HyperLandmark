@@ -2,8 +2,6 @@ package com.sample.tracking;
 
 import java.util.List;
 
-import com.zeusee.zmobileapi.STUtils;
-
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -86,6 +84,7 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
         return view;
     }
 
+    @SuppressLint("SdCardPath")
     private void handleDrawPoints() {
 
         synchronized (mNv21Data) {
@@ -94,6 +93,9 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
 
         boolean frontCamera = (CameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT);
 
+        if (null == mMultiTrack106) {
+            mMultiTrack106 = new FaceTracking("/sdcard/LBFaceTracking/models");
+        }
 
         if (frameIndex == 0) {
             mMultiTrack106.FaceTrackingInit(mTmpBuffer, PREVIEW_HEIGHT, PREVIEW_WIDTH);
@@ -148,28 +150,23 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        synchronized (lockObj) {
+            if (mMultiTrack106 != null) {
+                mMultiTrack106 = null;
+            }
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         this.mIsPaused = false;
-        if (null == mMultiTrack106) {
-            mMultiTrack106 = new FaceTracking("/sdcard/FaceTracking/models");
-        }
     }
 
     @Override
     public void onPause() {
         mHandler.removeMessages(MESSAGE_DRAW_POINTS);
         mIsPaused = true;
-        synchronized (lockObj) {
-            if (mMultiTrack106 != null) {
-                mMultiTrack106 = null;
-            }
-        }
-
         super.onPause();
     }
 

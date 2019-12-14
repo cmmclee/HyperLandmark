@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
     }
 
     void InitModelFiles() {
-        String assetPath = "FaceTracking";
+        String assetPath = "LBFaceTracking";
         String sdcardPath = Environment.getExternalStorageDirectory()
                 + File.separator + assetPath;
         copyFilesFromAssets(this, assetPath, sdcardPath);

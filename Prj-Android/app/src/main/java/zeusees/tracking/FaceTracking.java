@@ -9,7 +9,7 @@ import java.util.List;
 public class FaceTracking {
 
     static {
-        System.loadLibrary("zeuseesTracking-lib");
+        System.loadLibrary("FaceTracking-lib");
     }
 
     public native static void update(byte[] data, int height, int width, long session);
