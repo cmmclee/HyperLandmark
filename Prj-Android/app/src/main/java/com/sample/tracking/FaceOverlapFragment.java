@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,6 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
     private static final int MESSAGE_DRAW_POINTS = 100;
 
     private FaceTracking mMultiTrack106 = null;
-    private TrackCallBack mListener;
     private HandlerThread mHandlerThread;
     private Handler mHandler;
 
@@ -66,7 +66,6 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
                             handleDrawPoints();
                         }
                     }
-
                 }
             }
         };
@@ -105,7 +104,6 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
         frameIndex += 1;
 
         List<Face> faceActions = mMultiTrack106.getTrackingInfo();
-
         if (faceActions != null) {
 
             if (!mOverlap.getHolder().getSurface().isValid()) {
@@ -118,29 +116,22 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
 
             canvas.drawColor(0, PorterDuff.Mode.CLEAR);
             canvas.setMatrix(getMatrix());
+            Log.d("camera orientation: ", String.valueOf(mCameraInfo.orientation));
             boolean rotate270 = mCameraInfo.orientation == 270;
             for (Face r : faceActions) {
-
                 Rect rect = new Rect(PREVIEW_HEIGHT - r.left, r.top, PREVIEW_HEIGHT - r.right, r.bottom);
-
                 PointF[] points = new PointF[106];
                 for (int i = 0; i < 106; i++) {
                     points[i] = new PointF(r.landmarks[i * 2], r.landmarks[i * 2 + 1]);
                 }
-
-                float[] visible = new float[106];
-
-                for (int i = 0; i < points.length; i++) {
-                    visible[i] = 1.0f;
+                for (PointF point : points) {
                     if (rotate270) {
-                        points[i].x = PREVIEW_HEIGHT - points[i].x;
+                        point.x = PREVIEW_HEIGHT - point.x;
                     }
                 }
 
-                STUtils.drawFaceRect(canvas, rect, PREVIEW_HEIGHT,
-                        PREVIEW_WIDTH, frontCamera);
-                STUtils.drawPoints(canvas, mPaint, points, visible, PREVIEW_HEIGHT,
-                        PREVIEW_WIDTH, frontCamera);
+                STUtils.drawFaceRect(canvas, rect, PREVIEW_HEIGHT, PREVIEW_WIDTH, frontCamera);
+                STUtils.drawPoints(canvas, mPaint, points, PREVIEW_HEIGHT, PREVIEW_WIDTH, frontCamera);
 
             }
             mOverlap.getHolder().unlockCanvasAndPost(canvas);
@@ -170,11 +161,5 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
         super.onPause();
     }
 
-    public void registerTrackCallback(TrackCallBack callback) {
-        mListener = callback;
-    }
-
-    public interface TrackCallBack {
-    }
 
 }

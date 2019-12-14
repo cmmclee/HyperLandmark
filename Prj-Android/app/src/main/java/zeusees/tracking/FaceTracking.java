@@ -45,12 +45,9 @@ public class FaceTracking {
 
     public void FaceTrackingInit(byte[] data, int height, int width) {
         initTracking(data, height, width, session);
-
     }
 
     public void Update(byte[] data, int height, int width) {
-
-
         update(data, height, width, session);
         int numFace = getTrackingNum(session);
         faces.clear();

@@ -108,7 +108,7 @@ public class STUtils {
         return BitmapFactory.decodeByteArray(cur, 0, cur.length);
     }
 
-    public static void drawFaceRect(Canvas canvas, Rect rect, int width, int height, boolean frontCamera) {
+    static void drawFaceRect(Canvas canvas, Rect rect, int width, int height, boolean frontCamera) {
         if(canvas != null) {
             Paint paint = new Paint();
             paint.setColor(Color.rgb(255, 0, 127));
@@ -125,26 +125,15 @@ public class STUtils {
         }
     }
 
-    public static void drawPoints(Canvas canvas, Paint paint, PointF[] points, float[] visible, int width, int height, boolean frontCamera) {
+    static void drawPoints(Canvas canvas, Paint paint, PointF[] points, int width, int height, boolean frontCamera) {
         if(canvas != null) {
-            float strokeWidth = Math.max(width / 240, 2.0f);
-
-            for(int i = 0; i < points.length; ++i) {
-                PointF p = points[i];
-                if(frontCamera) {
-                    p.x = (float)width - p.x;
+            float radius = Math.max(width / 240.0f, 1.5f);
+            for (PointF p : points) {
+                if (frontCamera) {
+                    p.x = (float) width - p.x;
                 }
-
-                if(visible[i] < 0.5f) {
-                    paint.setColor(Color.rgb(255, 20, 20));
-                } else {
-                    paint.setColor(Color.rgb(57, 168, 243));
-                }
-
-                canvas.drawCircle(p.x, p.y, (float)strokeWidth, paint);
+                canvas.drawCircle(p.x, p.y, radius, paint);
             }
-
-            paint.setColor(Color.rgb(57, 138, 243));
         }
     }
 

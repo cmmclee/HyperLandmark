@@ -18,13 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-
 public class CameraOverlapFragment extends Fragment {
 
     protected Camera mCamera = null;
     protected CameraInfo mCameraInfo = null;
     protected int mCameraInit = 0;
-    protected SurfaceView mSurfaceview = null;
+    protected SurfaceView mSurfaceView = null;
     protected SurfaceView mOverlap = null;
     protected SurfaceHolder mSurfaceHolder = null;
 
@@ -38,16 +37,14 @@ public class CameraOverlapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_camera_overlap, container,
-                false);
+        View view = inflater.inflate(R.layout.fragment_camera_overlap, container, false);
 
-
-        mSurfaceview = view.findViewById(R.id.surfaceViewCamera);
+        mSurfaceView = view.findViewById(R.id.surfaceViewCamera);
         mOverlap = view.findViewById(R.id.surfaceViewOverlap);
         mOverlap.setZOrderOnTop(true);
         mOverlap.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        mSurfaceHolder = mSurfaceview.getHolder();
-        mSurfaceview.setOnClickListener(
+        mSurfaceHolder = mSurfaceView.getHolder();
+        mSurfaceView.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -62,9 +59,7 @@ public class CameraOverlapFragment extends Fragment {
         );
         mSurfaceHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
-            public void surfaceChanged(SurfaceHolder holder, int format,
-                                       int width, int height) {
-
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
                 matrix.setScale(width / (float) PREVIEW_HEIGHT, height / (float) PREVIEW_WIDTH);
                 initCamera();
             }
@@ -77,7 +72,6 @@ public class CameraOverlapFragment extends Fragment {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-
                 if (null != mCamera) {
                     mCamera.setPreviewCallback(null);
                     mCamera.stopPreview();
@@ -86,8 +80,6 @@ public class CameraOverlapFragment extends Fragment {
                 }
                 mCameraInit = 0;
             }
-
-
         });
 
         return view;
@@ -134,20 +126,16 @@ public class CameraOverlapFragment extends Fragment {
             try {
                 Camera.Parameters parameters = mCamera.getParameters();
                 List<String> flashModes = parameters.getSupportedFlashModes();
-                if(flashModes !=null && flashModes.contains(Camera.Parameters.FLASH_MODE_OFF))
-                {
+                if (flashModes != null && flashModes.contains(Camera.Parameters.FLASH_MODE_OFF)) {
                     parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
                 }
 
 
-                List<Size> previewSizes = mCamera.getParameters()
-                        .getSupportedPreviewSizes();
-                List<Size> pictureSizes = mCamera.getParameters()
-                        .getSupportedPictureSizes();
+                List<Size> previewSizes = mCamera.getParameters().getSupportedPreviewSizes();
+                List<Size> pictureSizes = mCamera.getParameters().getSupportedPictureSizes();
 
                 for (int i = 0; i < previewSizes.size(); i++) {
                     Size psize = previewSizes.get(i);
-
                 }
                 parameters.setPreviewSize(PREVIEW_WIDTH, PREVIEW_HEIGHT);
 
@@ -156,7 +144,6 @@ public class CameraOverlapFragment extends Fragment {
                     Size psize = pictureSizes.get(i);
                     if (fs == null && psize.width >= 1280)
                         fs = psize;
-
                 }
                 parameters.setPictureSize(fs.width, fs.height);
 
@@ -172,15 +159,15 @@ public class CameraOverlapFragment extends Fragment {
                     mCamera.setDisplayOrientation(0);
 
                 }
-                
-                if(CameraFacing == CameraInfo.CAMERA_FACING_BACK){
-                	if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
-    					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-    				} else{
-    					parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-    				}
+
+                if (CameraFacing == CameraInfo.CAMERA_FACING_BACK) {
+                    if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                    } else {
+                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+                    }
                 }
-                
+
                 mCamera.setParameters(parameters);
                 mCamera.setPreviewCallback(this.mPreviewCallback);
                 mCamera.startPreview();
@@ -192,7 +179,6 @@ public class CameraOverlapFragment extends Fragment {
             }
         }
     }
-
 
 
     public void setPreviewCallback(Camera.PreviewCallback previewCallback) {

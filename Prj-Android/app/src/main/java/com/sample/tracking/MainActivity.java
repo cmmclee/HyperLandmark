@@ -57,7 +57,6 @@ public class MainActivity extends Activity {
         String sdcardPath = Environment.getExternalStorageDirectory()
                 + File.separator + assetPath;
         copyFilesFromAssets(this, assetPath, sdcardPath);
-
     }
 
     private String[] denied;
@@ -124,12 +123,6 @@ public class MainActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-
-        final FaceOverlapFragment fragment = (FaceOverlapFragment) getFragmentManager()
-                .findFragmentById(R.id.overlapFragment);
-        fragment.registerTrackCallback(new FaceOverlapFragment.TrackCallBack() {
-
-        });
     }
 
     @Override
