@@ -114,12 +114,6 @@ public class STUtils {
             paint.setColor(Color.rgb(255, 0, 127));
             float strokeWidth = Math.max(width / 240, 2.0f);
             paint.setStrokeWidth(strokeWidth);
-            if(frontCamera) {
-                int left = rect.left;
-                rect.left = width - rect.right;
-                rect.right = width - left;
-            }
-
             paint.setStyle(Paint.Style.STROKE);
             canvas.drawRect(rect, paint);
         }
@@ -129,9 +123,6 @@ public class STUtils {
         if(canvas != null) {
             float radius = Math.max(width / 240.0f, 1.5f);
             for (PointF p : points) {
-                if (frontCamera) {
-                    p.x = (float) width - p.x;
-                }
                 canvas.drawCircle(p.x, p.y, radius, paint);
             }
         }

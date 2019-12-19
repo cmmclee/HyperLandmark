@@ -116,18 +116,11 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
 
             canvas.drawColor(0, PorterDuff.Mode.CLEAR);
             canvas.setMatrix(getMatrix());
-            Log.d("camera orientation: ", String.valueOf(mCameraInfo.orientation));
-            boolean rotate270 = mCameraInfo.orientation == 270;
             for (Face r : faceActions) {
-                Rect rect = new Rect(PREVIEW_HEIGHT - r.left, r.top, PREVIEW_HEIGHT - r.right, r.bottom);
+                Rect rect = new Rect(r.left, r.top, r.right, r.bottom);
                 PointF[] points = new PointF[106];
                 for (int i = 0; i < 106; i++) {
                     points[i] = new PointF(r.landmarks[i * 2], r.landmarks[i * 2 + 1]);
-                }
-                for (PointF point : points) {
-                    if (rotate270) {
-                        point.x = PREVIEW_HEIGHT - point.x;
-                    }
                 }
 
                 STUtils.drawFaceRect(canvas, rect, PREVIEW_HEIGHT, PREVIEW_WIDTH, frontCamera);
