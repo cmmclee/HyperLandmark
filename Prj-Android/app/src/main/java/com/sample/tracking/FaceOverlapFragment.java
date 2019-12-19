@@ -90,8 +90,6 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
             System.arraycopy(mNv21Data, 0, mTmpBuffer, 0, mNv21Data.length);
         }
 
-        boolean frontCamera = (CameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT);
-
         if (null == mMultiTrack106) {
             mMultiTrack106 = new FaceTracking("/sdcard/LBFaceTracking/models");
         }
