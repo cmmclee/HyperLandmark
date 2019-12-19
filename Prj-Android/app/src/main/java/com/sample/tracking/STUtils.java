@@ -108,22 +108,20 @@ public class STUtils {
         return BitmapFactory.decodeByteArray(cur, 0, cur.length);
     }
 
-    static void drawFaceRect(Canvas canvas, Rect rect, int width, int height, boolean frontCamera) {
+    static void drawFaceRect(Canvas canvas, Rect rect) {
         if(canvas != null) {
             Paint paint = new Paint();
             paint.setColor(Color.rgb(255, 0, 127));
-            float strokeWidth = Math.max(width / 240, 2.0f);
-            paint.setStrokeWidth(strokeWidth);
+            paint.setStrokeWidth(2.0f);
             paint.setStyle(Paint.Style.STROKE);
             canvas.drawRect(rect, paint);
         }
     }
 
-    static void drawPoints(Canvas canvas, Paint paint, PointF[] points, int width, int height, boolean frontCamera) {
+    static void drawPoints(Canvas canvas, Paint paint, PointF[] points) {
         if(canvas != null) {
-            float radius = Math.max(width / 240.0f, 1.5f);
             for (PointF p : points) {
-                canvas.drawCircle(p.x, p.y, radius, paint);
+                canvas.drawCircle(p.x, p.y, 1.5f, paint);
             }
         }
     }
