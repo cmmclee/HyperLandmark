@@ -51,7 +51,7 @@ public class FaceTracking {
         update(data, height, width, session);
         int numFace = getTrackingNum(session);
         faces.clear();
-        Log.d("numFace_tracking", numFace + "");
+        Log.i("numFace_tracking", numFace + "");
 
         for (int i = 0; i < numFace; i++) {
             int[] landmarks = getTrackingLandmarkByIndex(i, session);

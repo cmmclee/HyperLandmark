@@ -145,7 +145,7 @@ public class CameraOverlapFragment extends Fragment {
                 if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
                     parameters.set("orientation", "portrait");
                     parameters.set("rotation", 90);
-                    int orientation = CameraFacing == CameraInfo.CAMERA_FACING_FRONT ? 360 - mCameraInfo.orientation : mCameraInfo.orientation;
+                    int orientation = 360 - mCameraInfo.orientation;
                     mCamera.setDisplayOrientation(orientation);
                 } else {
                     parameters.set("orientation", "landscape");
