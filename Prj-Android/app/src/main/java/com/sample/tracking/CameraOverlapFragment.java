@@ -1,5 +1,7 @@
 package com.sample.tracking;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.Fragment;
@@ -95,7 +97,6 @@ public class CameraOverlapFragment extends Fragment {
             }
         }
         try {
-
             mCamera.setPreviewDisplay(mSurfaceHolder);
             initCamera();
         } catch (Exception ex) {
@@ -106,6 +107,12 @@ public class CameraOverlapFragment extends Fragment {
         }
     }
 
+    private class CameraSizeComparator implements Comparator<Size> {
+        @Override
+        public int compare(Size o1, Size o2) {
+            return Integer.compare(o1.width, o2.width);
+        }
+    }
 
     private void initCamera() {
         mCameraInit = 1;
@@ -117,50 +124,38 @@ public class CameraOverlapFragment extends Fragment {
                     parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
                 }
 
-
+                CameraSizeComparator comparator = new CameraSizeComparator();
                 List<Size> previewSizes = mCamera.getParameters().getSupportedPreviewSizes();
+                Collections.sort(previewSizes, comparator);
+                for (Size previewSize : previewSizes) {
+                    if (previewSize.width >= 640) {
+                        parameters.setPreviewSize(previewSize.width, previewSize.height);
+                        break;
+                    }
+                }
+
                 List<Size> pictureSizes = mCamera.getParameters().getSupportedPictureSizes();
-
-                for (int i = 0; i < previewSizes.size(); i++) {
-                    Size psize = previewSizes.get(i);
+                Collections.sort(pictureSizes, comparator);
+                for (Size pictureSize : pictureSizes) {
+                    if (pictureSize.width >= 640) {
+                        parameters.setPictureSize(pictureSize.width, pictureSize.height);
+                        break;
+                    }
                 }
-                parameters.setPreviewSize(PREVIEW_WIDTH, PREVIEW_HEIGHT);
-
-                Size fs = null;
-                for (int i = 0; i < pictureSizes.size(); i++) {
-                    Size psize = pictureSizes.get(i);
-                    if (fs == null && psize.width >= 1280)
-                        fs = psize;
-                }
-                parameters.setPictureSize(fs.width, fs.height);
 
                 if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
                     parameters.set("orientation", "portrait");
                     parameters.set("rotation", 90);
-
                     int orientation = CameraFacing == CameraInfo.CAMERA_FACING_FRONT ? 360 - mCameraInfo.orientation : mCameraInfo.orientation;
                     mCamera.setDisplayOrientation(orientation);
-
                 } else {
                     parameters.set("orientation", "landscape");
                     mCamera.setDisplayOrientation(0);
-
-                }
-
-                if (CameraFacing == CameraInfo.CAMERA_FACING_BACK) {
-                    if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
-                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-                    } else {
-                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-                    }
                 }
 
                 mCamera.setParameters(parameters);
                 mCamera.setPreviewCallback(this.mPreviewCallback);
                 mCamera.startPreview();
-
-                Camera.Size csize = mCamera.getParameters().getPreviewSize();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

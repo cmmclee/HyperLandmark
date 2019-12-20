@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import zeusees.tracking.Face;
 import zeusees.tracking.FaceTracking;
@@ -80,8 +81,46 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
                 mHandler.sendEmptyMessage(MESSAGE_DRAW_POINTS);
             }
         });
+        if (view != null)
+            view.findViewById(R.id.tv_take_pic).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(faceActions == null||faceActions.size() == 0){
+                        return;
+                    }
+                    mCamera.takePicture(new Camera.ShutterCallback() {
+                        @Override
+                        public void onShutter() {
+
+                        }
+                    }, new Camera.PictureCallback() {
+                        @Override
+                        public void onPictureTaken(byte[] data, Camera camera) {
+
+                        }
+                    }, new Camera.PictureCallback() {
+                        @Override
+                        public void onPictureTaken(byte[] data, Camera camera) {
+                            new SavePicAsyncTask(faceActions.get(0), data, mCameraInit, new SavePicAsyncTask.OnTakePicCallBackListener() {
+                                @Override
+                                public void savePicPath(final String picPath) {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getActivity(), "picPath=" + picPath, Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }).execute();
+                        }
+                    });
+
+                }
+            });
         return view;
     }
+
+    private List<Face> faceActions;
 
     @SuppressLint("SdCardPath")
     private void handleDrawPoints() {
@@ -101,7 +140,7 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
         }
         frameIndex += 1;
 
-        List<Face> faceActions = mMultiTrack106.getTrackingInfo();
+        faceActions = mMultiTrack106.getTrackingInfo();
         if (faceActions != null) {
 
             if (!mOverlap.getHolder().getSurface().isValid()) {
