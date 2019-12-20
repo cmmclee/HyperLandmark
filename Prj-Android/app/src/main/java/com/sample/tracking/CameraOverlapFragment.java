@@ -142,7 +142,6 @@ public class CameraOverlapFragment extends Fragment {
                         break;
                     }
                 }
-
                 if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
                     parameters.set("orientation", "portrait");
                     parameters.set("rotation", 90);

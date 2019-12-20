@@ -3,6 +3,8 @@ package com.sample.tracking;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,7 +18,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
     private HandlerThread mHandlerThread;
     private Handler mHandler;
 
-    private byte mNv21Data[];
+    private byte[] mNv21Data;
     private byte[] mTmpBuffer;
 
     private int frameIndex = 0;
@@ -42,6 +43,8 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
     private Paint mPaint;
     private final Object lockObj = new Object();
     private boolean mIsPaused = false;
+
+    private Bitmap srcImage;
 
     @SuppressLint("NewApi")
     @Override
@@ -76,7 +79,6 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
                 synchronized (mNv21Data) {
                     System.arraycopy(data, 0, mNv21Data, 0, data.length);
                 }
-
                 mHandler.removeMessages(MESSAGE_DRAW_POINTS);
                 mHandler.sendEmptyMessage(MESSAGE_DRAW_POINTS);
             }
@@ -85,7 +87,7 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
             view.findViewById(R.id.tv_take_pic).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(faceActions == null||faceActions.size() == 0){
+                    if(faceActions == null||faceActions.size() == 0) {
                         return;
                     }
                     mCamera.takePicture(new Camera.ShutterCallback() {
@@ -114,7 +116,6 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
                             }).execute();
                         }
                     });
-
                 }
             });
         return view;

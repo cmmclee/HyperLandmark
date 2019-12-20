@@ -95,8 +95,7 @@ public class MainActivity extends Activity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 5) {
             boolean isDenied = false;
-            for (int i = 0; i < denied.length; i++) {
-                String permission = denied[i];
+            for (String permission : denied) {
                 for (int j = 0; j < permissions.length; j++) {
                     if (permissions[j].equals(permission)) {
                         if (grantResults[j] != PackageManager.PERMISSION_GRANTED) {
