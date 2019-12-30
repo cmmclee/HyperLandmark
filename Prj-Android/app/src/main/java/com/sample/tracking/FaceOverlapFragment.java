@@ -31,6 +31,7 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
 
     private static final int MESSAGE_DRAW_POINTS = 100;
 
+
     private FaceTracking mMultiTrack106 = null;
     private HandlerThread mHandlerThread;
     private Handler mHandler;
