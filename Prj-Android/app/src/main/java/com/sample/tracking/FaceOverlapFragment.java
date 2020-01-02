@@ -79,6 +79,7 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
             public void onPreviewFrame(byte[] data, Camera camera) {
                 synchronized (mNv21Data) {
                     System.arraycopy(data, 0, mNv21Data, 0, data.length);
+                    Bitmap bitmap = STUtils.NV21ToRGBABitmap(mNv21Data, PREVIEW_WIDTH, PREVIEW_HEIGHT, getContext());
                 }
                 mHandler.removeMessages(MESSAGE_DRAW_POINTS);
                 mHandler.sendEmptyMessage(MESSAGE_DRAW_POINTS);
